@@ -5,7 +5,7 @@ var fs = require('fs-extra');
 var Gpio = require('onoff').Gpio;
 var io = require('socket.io-client');
 var socket = io.connect('http://localhost:3000');
-var actions = ["playPause", "volumeUp", "volumeDown", "previous", "next", "shutdown"];
+var actions = ["playPause", "volumeUp", "volumeDown", "previous", "next", "shutdown", "playlist1", "playlist2", "playlist3", "playlist4"];
 
 module.exports = GPIOButtons;
 
@@ -26,8 +26,8 @@ GPIOButtons.prototype.onVolumioStart = function () {
 	this.config.loadFile(configFile);
 
 	self.logger.info("GPIO-Buttons initialized");
-	
-	return libQ.resolve();	
+
+	return libQ.resolve();
 };
 
 
@@ -46,7 +46,7 @@ GPIOButtons.prototype.onStart = function () {
 			self.logger.info("GPIO-Buttons started");
 			defer.resolve();
 		});
-	
+
     return defer.promise;
 };
 
@@ -60,7 +60,7 @@ GPIOButtons.prototype.onStop = function () {
 			self.logger.info("GPIO-Buttons stopped");
 			defer.resolve();
 		});
-	
+
     return defer.promise;
 };
 
@@ -117,13 +117,13 @@ GPIOButtons.prototype.getUIConfig = function () {
 
 			var i = 0;
 			actions.forEach(function(action, index, array) {
- 				
+
  				// Strings for config
 				var c1 = action.concat('.enabled');
 				var c2 = action.concat('.pin');
-				
+
 				// accessor supposes actions and uiconfig items are in SAME order
-				// this is potentially dangerous: rewrite with a JSON search of "id" value ?				
+				// this is potentially dangerous: rewrite with a JSON search of "id" value ?
 				uiconf.sections[0].content[2*i].value = self.config.get(c1);
 				uiconf.sections[0].content[2*i+1].value.value = self.config.get(c2);
 				uiconf.sections[0].content[2*i+1].value.label = self.config.get(c2).toString();
@@ -187,24 +187,24 @@ GPIOButtons.prototype.createTriggers = function() {
 			self.triggers.push(j);
 		}
 	});
-		
+
 	return libQ.resolve();
 };
 
 
 GPIOButtons.prototype.clearTriggers = function () {
 	var self = this;
-	
+
 	self.triggers.forEach(function(trigger, index, array) {
   		self.logger.info("GPIO-Buttons: Destroying trigger " + index);
 
 		trigger.unwatchAll();
-		trigger.unexport();		
+		trigger.unexport();
 	});
-	
+
 	self.triggers = [];
 
-	return libQ.resolve();	
+	return libQ.resolve();
 };
 
 
@@ -270,4 +270,28 @@ GPIOButtons.prototype.volumeDown = function() {
 GPIOButtons.prototype.shutdown = function() {
   // this.logger.info('GPIO-Buttons: shutdown button pressed\n');
   this.commandRouter.shutdown();
+};
+
+//play playlist 1
+GPIOButtons.prototype.playlist1 = function() {
+  //this.logger.info('GPIO-Buttons: playlist1- button pressed\n');
+  socket.emit('playPlaylist',{"name":"playlist1"});
+};
+
+//play playlist 2
+GPIOButtons.prototype.playlist2 = function() {
+  //this.logger.info('GPIO-Buttons: playlist1- button pressed\n');
+  socket.emit('playPlaylist',{"name":"playlist2"});
+};
+
+//play playlist 3
+GPIOButtons.prototype.playlist3 = function() {
+  //this.logger.info('GPIO-Buttons: playlist1- button pressed\n');
+  socket.emit('playPlaylist',{"name":"playlist3"});
+};
+
+//play playlist 4
+GPIOButtons.prototype.playlist4 = function() {
+  //this.logger.info('GPIO-Buttons: playlist1- button pressed\n');
+  socket.emit('playPlaylist',{"name":"playlist4"});
 };

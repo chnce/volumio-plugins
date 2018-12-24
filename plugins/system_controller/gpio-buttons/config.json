@@ -28,5 +28,25 @@
     "enabled": {"value": false, "type": "boolean"},
     "pin": {"value": 3,"type":"number"},
     "value": {"value": 0, "type": "number"}
+  },
+  "playlist1":{
+    "enabled": {"value": false, "type": "boolean"},
+    "pin": {"value": 19,"type":"number"},
+    "value": {"value": 0, "type": "number"}
+  },
+  "playlist2":{
+    "enabled": {"value": false, "type": "boolean"},
+    "pin": {"value": 20,"type":"number"},
+    "value": {"value": 0, "type": "number"}
+  },
+  "playlist3":{
+    "enabled": {"value": false, "type": "boolean"},
+    "pin": {"value": 21,"type":"number"},
+    "value": {"value": 0, "type": "number"}
+  },
+  "playlist4":{
+    "enabled": {"value": false, "type": "boolean"},
+    "pin": {"value": 25,"type":"number"},
+    "value": {"value": 0, "type": "number"}
   }
 }
